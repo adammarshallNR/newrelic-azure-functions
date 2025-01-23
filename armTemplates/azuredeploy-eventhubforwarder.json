@@ -31,9 +31,9 @@
         },
         "newRelicEndpoint": {
             "type": "string",
-            "defaultValue": "https://log-api.newrelic.com/log/v1",
+            "defaultValue": "https://log-api.eu.newrelic.com/log/v1",
             "metadata": {
-                "description": "The Logs API endpoint used to send your logs to. By default, it is https://log-api.newrelic.com/log/v1 if your account is in the United States (US) region. Otherwise, if you're in the European Union (EU) region, you should use https://log-api.eu.newrelic.com/log/v1"
+                "description": "The Logs API endpoint used to send your logs to. By default, it is https://log-api.eu.newrelic.com/log/v1 if you're in the European Union (EU) region, if your account is in the United States (US) region you should use https://log-api.newrelic.com/log/v1"
             }
         },
         "logCustomAttributes": {
@@ -692,7 +692,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "activityLogsDiagnosticSettingsAtSubscriptionLevelDeployment",
+            "name": "activityLogsDiagnosticSettingsAtSubscriptionLevelDeployment-adamEuFork",
             "condition": "[variables('createActivityLogsDiagnosticSetting')]",
             "location": "[variables('location')]",
             "subscriptionId": "[subscription().subscriptionId]",
