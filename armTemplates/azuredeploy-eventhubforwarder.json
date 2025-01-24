@@ -692,7 +692,7 @@
         {
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2020-06-01",
-            "name": "activityLogsDiagnosticSettingsAtSubscriptionLevelDeployment-adamEuFork",
+            "name": "eulogsfork-adammarshall-newrelic",
             "condition": "[variables('createActivityLogsDiagnosticSetting')]",
             "location": "[variables('location')]",
             "subscriptionId": "[subscription().subscriptionId]",
