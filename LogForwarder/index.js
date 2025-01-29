@@ -196,6 +196,7 @@ function addAzureLicData(logEntry) {
     logEntry.azure.resourceId = logEntry.resourceId.toLowerCase();
     if (resourceId.length > 7) {
       logEntry.azure.resourceType = resourceId[6] + '/' + resourceId[7];
+      logEntry.displayName = resourceId[8];
     }
   }
   return logEntry;
