@@ -45,7 +45,6 @@ module.exports = async function main(context, logMessages) {
     return;
   }
   let logLines = appendMetaDataToAllLogLines(buffer);
-  logLines = appendAzureLicDataToAllLogLines(logLines);
   logLines = appendTimestampToAllLogLines(logLines);
   await compressAndSend(logLines, context);
 };
@@ -115,10 +114,6 @@ function appendMetaDataToAllLogLines(logs) {
   return logs.map((log) => addMetadata(log));
 }
 
-function appendAzureLicDataToAllLogLines(logs) {
-  return logs.map((log) => addAzureLicData(log));
-}
-
 function appendTimestampToAllLogLines(logs) {
   return logs.map((log) => addTimestamp(log));
 }
@@ -171,7 +166,9 @@ function addMetadata(logEntry) {
     let resourceId = logEntry.resourceId.toLowerCase().split('/');
     if (resourceId.length > 2) {
       logEntry.metadata = {};
+      logEntry.azure = {};
       logEntry.metadata.subscriptionId = resourceId[2];
+      logEntry.azure.resourceId = logEntry.resourceId.toLowerCase();
     }
     if (resourceId.length > 4) {
       logEntry.metadata.resourceGroup = resourceId[4];
@@ -179,21 +176,6 @@ function addMetadata(logEntry) {
     if (resourceId.length > 6 && resourceId[6]) {
       logEntry.metadata.source = resourceId[6].replace('microsoft.', 'azure.');
     }
-  }
-  return logEntry;
-}
-
-function addAzureLicData(logEntry) {
-  if (
-    logEntry.resourceId !== undefined &&
-    typeof logEntry.resourceId === 'string' &&
-    logEntry.resourceId.toLowerCase().startsWith('/subscriptions/')
-  ) {
-    let resourceId = logEntry.resourceId.toLowerCase().split('/');
-    if (!logEntry.azure) {
-      logEntry.azure = {};
-    }
-    logEntry.azure.resourceId = logEntry.resourceId.toLowerCase();
     if (resourceId.length > 7) {
       logEntry.azure.resourceType = resourceId[6] + '/' + resourceId[7];
       logEntry.displayName = resourceId[8];
